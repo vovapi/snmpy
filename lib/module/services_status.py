@@ -13,11 +13,9 @@ class services_status(snmpy.module.ValueModule):
 	self.check_services()
 
     def update(self):
-        pass
+        self.check_services()
 
     @snmpy.task_func(snmpy.THREAD_TASK)
     def check_services(self):
-	while True:
-            for item in self:
-                self[item] = subprocess.call(['service', item, 'status'])
-            time.sleep(30)
+        for item in self:
+            self[item] = subprocess.call(['service', item, 'status'])
